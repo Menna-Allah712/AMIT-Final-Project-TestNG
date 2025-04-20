@@ -35,7 +35,7 @@ public class EndToEndTestCases {
             Assert.assertTrue(actualResult.contains(excpectedResult));
 
         }
-        public void addProductToCartSuccessfully()
+
 
 
 

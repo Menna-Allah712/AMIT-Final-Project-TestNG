@@ -11,9 +11,10 @@ public class HomePage {
     //locators
       private By SignupLink=By.linkText("Sign up");
     //Action
-      public void clickSignupLink(){
+      public SignupPage clickSignupLink(){
           driver.findElement(SignupLink).click();
-          return new SignupPage(driver)
+          return new SignupPage(driver);
+
 
       }
 

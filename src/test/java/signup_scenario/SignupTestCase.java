@@ -7,6 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pages.HomePage;
+import pages.SignupAlert;
+import pages.SignupPage;
 
 public class SignupTestCase {
     @Test
@@ -18,17 +21,21 @@ public class SignupTestCase {
 
         driver.manage().window().maximize();
         driver.get("https://demoblaze.com/");
-        driver.findElement(By.id("signin2")).click();
-        driver.findElement(By.id("sign-username")).sendKeys("Menna7");
-        driver.findElement(By.id("sign-password")).sendKeys("123!");
-        driver.findElement(By.className("btn btn-primary")).click();
+
+        HomePage homePage = new HomePage(driver);
+        SignupPage signupPage = homePage.clickSignupLink();
+        signupPage.insertUsername("Menna14");
+        signupPage.insertPassword("123");
+        SignupAlert signupAlert = signupPage.clickOnSignupButton();
 
         //compare
-        Thread.sleep(1000);
-        String excpectedResult="Sign up successful.";
-        String actualResult=driver.findElement(By.id("flash")).getText();
-        //Assertion
-        Assert.assertTrue(actualResult.contains(excpectedResult));
+        String expectedResult = "Sign up successful.";
+        String actualResult = signupAlert.readMessage();
+        //assert
+        Assert.assertTrue(actualResult.contains(expectedResult));
+
+        signupAlert.closeAlert();
+
         Thread.sleep(2000);
         driver.quit();
 
