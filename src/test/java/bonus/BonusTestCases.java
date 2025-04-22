@@ -1,19 +1,21 @@
-package end_to_end_scenario;
+package bonus;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pages.*;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-@RunWith(Enclosed.class)
-public class EndToEndTestCases {
+public class BonusTestCases {
     @Test
-    public void logInSuccessfully() throws InterruptedException {
+    public void testSignupWithExistingUserName() throws InterruptedException {
+
+    }
+
+    @Test
+    public void addSameProductToCart() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         WebDriverManager.chromedriver().setup();
@@ -48,7 +50,7 @@ public class EndToEndTestCases {
         homePage = productPage.clickOnHomePageButton();
 
         laptopsPage = homePage.clickLaptopsLink();
-        productPage = laptopsPage.clickOnSecondProduct();
+        productPage = laptopsPage.clickOnFirstProduct();
         productAddedAlert = productPage.clickOnAddToCartButton();
         //compare
         String expectedResult3 = "Product added";
@@ -96,4 +98,8 @@ public class EndToEndTestCases {
         driver.quit();
     }
 
+    @Test
+    public void loginWithInvalidCredentials() throws InterruptedException {
+
+    }
 }

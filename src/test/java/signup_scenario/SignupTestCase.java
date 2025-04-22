@@ -7,9 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pages.HomePage;
-import pages.SignupAlert;
-import pages.SignupPage;
+import org.example.pages.HomePage;
+import org.example.pages.SignupAlert;
+import org.example.pages.SignupPage;
 
 public class SignupTestCase {
     @Test
@@ -38,7 +38,7 @@ public class SignupTestCase {
 
         Thread.sleep(2000);
         driver.quit();
-
-
     }
+
+
 }

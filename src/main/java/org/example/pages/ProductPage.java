@@ -1,4 +1,4 @@
-package pages;
+package org.example.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +18,7 @@ public class ProductPage {
     //Locators
     private By addtocartbutton = By.cssSelector(".btn.btn-success.btn-lg");
     private By homePageButton = By.xpath("(//a[contains(@href, 'index.html')])[1]");
+    private By cartPageButton = By.linkText("Cart");
 
     //Actions
     public ProductAddedAlert clickOnAddToCartButton() {
@@ -28,6 +29,11 @@ public class ProductPage {
     public HomePage clickOnHomePageButton() {
         driver.findElement(homePageButton).click();
         return new HomePage(driver);
+    }
+
+    public CartPage clickOnCartPageButton() {
+        driver.findElement(cartPageButton).click();
+        return new CartPage(driver);
     }
 
 }
