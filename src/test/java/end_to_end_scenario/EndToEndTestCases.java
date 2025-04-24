@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-@RunWith(Enclosed.class)
+
 public class EndToEndTestCases {
     @Test
     public void logInSuccessfully() throws InterruptedException {
@@ -26,17 +26,16 @@ public class EndToEndTestCases {
         LoginPage loginPage = homePage.clickLoginLink();
         loginPage.insertUsername("Menna14");
         loginPage.insertPassword("123");
-        LoginAlert loginAlert = loginPage.clickOnLoginButton();
+        homePage = loginPage.clickOnLoginButton();
 
         //compare
         String expectedResult = "Welcome";
-        String actualResult = loginAlert.readMessage();
+        String actualResult = homePage.readWelcomeMessage();
         //assert
         Assert.assertTrue(actualResult.contains(expectedResult));
 
-        loginAlert.closeAlert();
-
         LaptopsPage laptopsPage = homePage.clickLaptopsLink();
+        Thread.sleep(1000);
         ProductPage productPage = laptopsPage.clickOnFirstProduct();
         ProductAddedAlert productAddedAlert = productPage.clickOnAddToCartButton();
         //compare
@@ -44,10 +43,11 @@ public class EndToEndTestCases {
         String actualResult2 = productAddedAlert.readMessage();
         //assert
         Assert.assertTrue(actualResult2.contains(expectedResult2));
-        productAddedAlert.closeAlert();
+        productPage = productAddedAlert.closeAlert();
         homePage = productPage.clickOnHomePageButton();
 
         laptopsPage = homePage.clickLaptopsLink();
+        Thread.sleep(1000);
         productPage = laptopsPage.clickOnSecondProduct();
         productAddedAlert = productPage.clickOnAddToCartButton();
         //compare
@@ -55,7 +55,7 @@ public class EndToEndTestCases {
         String actualResult3 = productAddedAlert.readMessage();
         //assert
         Assert.assertTrue(actualResult3.contains(expectedResult3));
-        productAddedAlert.closeAlert();
+        productPage = productAddedAlert.closeAlert();
 
         CartPage cartPage = productPage.clickOnCartPageButton();
         Assert.assertNotNull(cartPage.getFirstItem());

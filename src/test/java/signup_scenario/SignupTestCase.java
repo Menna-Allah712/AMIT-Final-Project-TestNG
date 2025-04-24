@@ -24,7 +24,7 @@ public class SignupTestCase {
 
         HomePage homePage = new HomePage(driver);
         SignupPage signupPage = homePage.clickSignupLink();
-        signupPage.insertUsername("Menna14");
+        signupPage.insertUsername("Menna22");
         signupPage.insertPassword("123");
         SignupAlert signupAlert = signupPage.clickOnSignupButton();
 

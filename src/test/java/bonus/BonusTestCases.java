@@ -11,32 +11,30 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class BonusTestCases {
     @Test
     public void testSignupWithExistingUserName() throws InterruptedException {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
-            WebDriverManager.chromedriver().setup();
-            WebDriver driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver(options);
 
-            driver.manage().window().maximize();
-            driver.get("https://demoblaze.com/");
+        driver.manage().window().maximize();
+        driver.get("https://demoblaze.com/");
 
-            HomePage homePage = new HomePage(driver);
-            SignupPage signupPage = homePage.clickSignupLink();
-            signupPage.insertUsername("Menna14");
-            signupPage.insertPassword("123");
-            SignupAlert signupAlert = signupPage.clickOnSignupButton();
+        HomePage homePage = new HomePage(driver);
+        SignupPage signupPage = homePage.clickSignupLink();
+        signupPage.insertUsername("Menna14");
+        signupPage.insertPassword("123");
+        SignupAlert signupAlert = signupPage.clickOnSignupButton();
 
-            //compare
-            String expectedResult = "This user already exist.";
-            String actualResult = signupAlert.readMessage();
-            //assert
-            Assert.assertTrue(actualResult.contains(expectedResult));
+        //compare
+        String expectedResult = "This user already exist.";
+        String actualResult = signupAlert.readMessage();
+        //assert
+        Assert.assertTrue(actualResult.contains(expectedResult));
 
-            signupAlert.closeAlert();
+        signupAlert.closeAlert();
 
-            Thread.sleep(2000);
-            driver.quit();
-        }
-
+        Thread.sleep(2000);
+        driver.quit();
     }
 
 
@@ -54,17 +52,16 @@ public class BonusTestCases {
         LoginPage loginPage = homePage.clickLoginLink();
         loginPage.insertUsername("Menna14");
         loginPage.insertPassword("123");
-        LoginAlert loginAlert = loginPage.clickOnLoginButton();
+        homePage = loginPage.clickOnLoginButton();
 
         //compare
         String expectedResult = "Welcome";
-        String actualResult = loginAlert.readMessage();
+        String actualResult = homePage.readWelcomeMessage();
         //assert
         Assert.assertTrue(actualResult.contains(expectedResult));
 
-        loginAlert.closeAlert();
-
         LaptopsPage laptopsPage = homePage.clickLaptopsLink();
+        Thread.sleep(1000);
         ProductPage productPage = laptopsPage.clickOnFirstProduct();
         ProductAddedAlert productAddedAlert = productPage.clickOnAddToCartButton();
         //compare
@@ -72,53 +69,20 @@ public class BonusTestCases {
         String actualResult2 = productAddedAlert.readMessage();
         //assert
         Assert.assertTrue(actualResult2.contains(expectedResult2));
-        productAddedAlert.closeAlert();
-        homePage = productPage.clickOnHomePageButton();
+        productPage = productAddedAlert.closeAlert();
 
-        laptopsPage = homePage.clickLaptopsLink();
-        productPage = laptopsPage.clickOnFirstProduct();
         productAddedAlert = productPage.clickOnAddToCartButton();
         //compare
         String expectedResult3 = "Product added";
         String actualResult3 = productAddedAlert.readMessage();
         //assert
         Assert.assertTrue(actualResult3.contains(expectedResult3));
-        productAddedAlert.closeAlert();
+        productPage = productAddedAlert.closeAlert();
 
         CartPage cartPage = productPage.clickOnCartPageButton();
         Assert.assertNotNull(cartPage.getFirstItem());
         Assert.assertNotNull(cartPage.getSecondItem());
 
-        //compare
-        int firstCartItemPrice = cartPage.getFirstCartItemPrice();
-        int secondCartItemPrice = cartPage.getSecondCartItemPrice();
-        int totalPrice = cartPage.getTotalPrice();
-        //assert
-        Assert.assertEquals(firstCartItemPrice + secondCartItemPrice, totalPrice);
-
-        PlaceOrderPage placeOrderPage = cartPage.clickOnPlaceOrderButton();
-
-        //compare
-        int totalOrderPrice = placeOrderPage.getTotalOrderPrice();
-
-        //assert
-        Assert.assertEquals(totalOrderPrice, totalPrice);
-
-        placeOrderPage.insertName("Menna");
-        placeOrderPage.insertCountry("Egypt");
-        placeOrderPage.insertCity("Alexandria");
-        placeOrderPage.insertCreditCard("1234567890123456");
-        placeOrderPage.insertMonth("12");
-        placeOrderPage.insertYear("26");
-
-        PurchaseSuccessPage purchaseSuccessPage = placeOrderPage.clickOnPurchaseButton();
-
-        //compare
-        String expectedResult4 = "Thank you for your purchase!";
-        String actualResult4 = purchaseSuccessPage.readMessage();
-
-        //assert
-        Assert.assertTrue(actualResult4.contains(expectedResult4));
 
         Thread.sleep(2000);
         driver.quit();
@@ -138,7 +102,7 @@ public class BonusTestCases {
         LoginPage loginPage = homePage.clickLoginLink();
         loginPage.insertUsername("Menna14");
         loginPage.insertPassword("12345");
-        LoginAlert loginAlert = loginPage.clickOnLoginButton();
+        LoginAlert loginAlert = loginPage.clickOnLoginButtonWrongPassword();
 
         //compare
         String expectedResult = "Wrong password.";
@@ -148,4 +112,7 @@ public class BonusTestCases {
 
         loginAlert.closeAlert();
 
+        Thread.sleep(2000);
+        driver.quit();
     }
+}

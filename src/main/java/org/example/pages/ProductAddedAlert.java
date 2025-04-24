@@ -18,8 +18,9 @@ public class ProductAddedAlert {
         return driver.switchTo().alert().getText();
     }
 
-    public void closeAlert() {
+    public ProductPage closeAlert() {
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
+        return new ProductPage(driver);
     }
 }

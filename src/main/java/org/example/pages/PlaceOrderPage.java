@@ -18,7 +18,7 @@ public class PlaceOrderPage {
     private By creditCartBox = By.id("card");
     private By monthBox = By.id("month");
     private By yearBox = By.id("year");
-    private By purchaseButton = By.className("btn btn-primary");
+    private By purchaseButton = By.cssSelector("button[onclick='purchaseOrder()']");
 
     public PlaceOrderPage(WebDriver driver) {
         this.driver = driver;
@@ -28,7 +28,10 @@ public class PlaceOrderPage {
     //actions
     public int getTotalOrderPrice() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(totalPrice));
-        return Integer.parseInt(driver.findElement(totalPrice).getText());
+        String total = driver.findElement(totalPrice).getText();
+        String numeric = total.split(":")[1].trim();
+        int value = Integer.parseInt(numeric);
+        return value;
     }
 
     public void insertName(String name) {
