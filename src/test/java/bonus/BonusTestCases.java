@@ -11,8 +11,34 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class BonusTestCases {
     @Test
     public void testSignupWithExistingUserName() throws InterruptedException {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*");
+            WebDriverManager.chromedriver().setup();
+            WebDriver driver = new ChromeDriver(options);
+
+            driver.manage().window().maximize();
+            driver.get("https://demoblaze.com/");
+
+            HomePage homePage = new HomePage(driver);
+            SignupPage signupPage = homePage.clickSignupLink();
+            signupPage.insertUsername("Menna14");
+            signupPage.insertPassword("123");
+            SignupAlert signupAlert = signupPage.clickOnSignupButton();
+
+            //compare
+            String expectedResult = "This user already exist.";
+            String actualResult = signupAlert.readMessage();
+            //assert
+            Assert.assertTrue(actualResult.contains(expectedResult));
+
+            signupAlert.closeAlert();
+
+            Thread.sleep(2000);
+            driver.quit();
+        }
 
     }
+
 
     @Test
     public void addSameProductToCart() throws InterruptedException {
@@ -100,6 +126,26 @@ public class BonusTestCases {
 
     @Test
     public void loginWithInvalidCredentials() throws InterruptedException {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver(options);
+
+        driver.manage().window().maximize();
+        driver.get("https://demoblaze.com/");
+
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = homePage.clickLoginLink();
+        loginPage.insertUsername("Menna14");
+        loginPage.insertPassword("12345");
+        LoginAlert loginAlert = loginPage.clickOnLoginButton();
+
+        //compare
+        String expectedResult = "Wrong password.";
+        String actualResult = loginAlert.readMessage();
+        //assert
+        Assert.assertTrue(actualResult.contains(expectedResult));
+
+        loginAlert.closeAlert();
 
     }
-}
